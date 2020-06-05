@@ -1,11 +1,11 @@
-package dev.nylander.util.tree.parented;
+package dev.nylander.util.tree;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public abstract class AbstractTreeTraverser<N extends TreeNode<N>> implements TreeTraverser<N> {
+public abstract class AbstractParentedTreeTraverser<N extends ParentedTreeNode<N>> implements ParentedTreeTraverser<N> {
     private TraversalMap<N> traversalStates = createTraversalMap();
 
     @Override

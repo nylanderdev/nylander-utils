@@ -1,6 +1,6 @@
-package dev.nylander.util.tree.parented;
+package dev.nylander.util.tree;
 
-public class PreOrderTreeTraverser<N extends TreeNode<N>> extends AbstractTreeTraverser<N> {
+public class PreOrderParentedTreeTraverser<N extends ParentedTreeNode<N>> extends AbstractParentedTreeTraverser<N> {
     @Override
     protected TraversalState incrementTraversalState(TraversalState state) {
         switch (state) {
