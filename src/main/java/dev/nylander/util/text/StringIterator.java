@@ -21,4 +21,8 @@ public class StringIterator implements Iterator<Character> {
     public Character next() {
         return charactersOfString[nextIndex++];
     }
+
+    public Character peek() {
+        return charactersOfString[nextIndex];
+    }
 }
