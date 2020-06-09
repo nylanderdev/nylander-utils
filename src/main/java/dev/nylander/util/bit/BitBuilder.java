@@ -11,7 +11,7 @@ public class BitBuilder {
         if (bufferLength == 0) {
             internalChars.append(aChar);
         } else {
-            appendBits(charToBits(aChar));
+            appendBits(BitUtils.charToBits(aChar));
         }
     }
 
@@ -46,7 +46,7 @@ public class BitBuilder {
         boolean[] allBits = new boolean[8 * internalChars.length() + bufferLength];
         char[] chars = internalChars.toString().toCharArray();
         for (int charIndex = 0; charIndex < chars.length; charIndex++) {
-            boolean[] bitsOfChar = charToBits(chars[charIndex]);
+            boolean[] bitsOfChar = BitUtils.charToBits(chars[charIndex]);
             System.arraycopy(bitsOfChar, 0, allBits, 8 * charIndex, 8);
         }
         System.arraycopy(buffer, 0, allBits, 8 * internalChars.length(), bufferLength);
@@ -54,22 +54,7 @@ public class BitBuilder {
     }
 
     private char charFromBuffer() {
-        char bufferChar = 0;
-        for (int i = 0; i < buffer.length; i++) {
-            if (buffer[buffer.length - 1 - i]) {
-                bufferChar |= (1 << i);
-            }
-        }
-        return bufferChar;
-    }
-
-    private static boolean[] charToBits(final char aChar) {
-        final int sizeOfByte = 8;
-        boolean[] bitArray = new boolean[sizeOfByte];
-        for (int i = 0; i < sizeOfByte; i++) {
-            bitArray[sizeOfByte - 1 - i] = ((aChar >> i) & 1) == 1;
-        }
-        return bitArray;
+        return BitUtils.bitsToChar(buffer);
     }
 
 }

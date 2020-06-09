@@ -1,6 +1,6 @@
 package dev.nylander.util.bit;
 
-class BitUtil {
+class BitUtils {
 
     public static char bitsToChar(boolean[] eightBits) {
         if (eightBits.length != 8) {

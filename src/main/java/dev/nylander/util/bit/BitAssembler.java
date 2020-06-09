@@ -25,7 +25,7 @@ public class BitAssembler {
     }
 
     public void push(char aChar) {
-        push(BitUtil.charToBits(aChar));
+        push(BitUtils.charToBits(aChar));
     }
 
     public void push(byte aByte) {
@@ -79,7 +79,7 @@ public class BitAssembler {
         if (availableBytes() < 1) {
             throw new IllegalStateException("Less than eight bits in the BitAssembler.");
         }
-        return BitUtil.bitsToChar(popBits(8));
+        return BitUtils.bitsToChar(popBits(8));
     }
 
     public int availableBytes() {
@@ -92,7 +92,7 @@ public class BitAssembler {
 
     private void loadBottomBuffer() {
         char internalChar = internalChars.remove();
-        boolean[] bitsToLoad = BitUtil.charToBits(internalChar);
+        boolean[] bitsToLoad = BitUtils.charToBits(internalChar);
         System.arraycopy(bitsToLoad, 0, bottomBuffer, 0, bitsToLoad.length);
         bottomBufferLength = 8;
     }
@@ -134,6 +134,6 @@ public class BitAssembler {
     }
 
     private char charFromTopBuffer() {
-        return BitUtil.bitsToChar(topBuffer);
+        return BitUtils.bitsToChar(topBuffer);
     }
 }
