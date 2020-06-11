@@ -21,6 +21,19 @@ public class StringIteratorTest {
         testNoNextException("that's wack");
     }
 
+    @Test
+    public void peekNextEqualityTest1() {
+        testPeekNextEquality("hello World!?!");
+    }
+
+    private void testPeekNextEquality(String string) {
+        StringIterator iterator = new StringIterator(string);
+        while (iterator.hasNext()) {
+            Character peeked = iterator.peek();
+            Assert.assertEquals(peeked, iterator.next());
+        }
+    }
+
     private void testNoNextException(final String string) {
         StringIterator iterator = new StringIterator(string);
         for (int i = 0; i < string.length(); i++) {
