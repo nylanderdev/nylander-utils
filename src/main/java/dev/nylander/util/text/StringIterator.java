@@ -1,6 +1,7 @@
 package dev.nylander.util.text;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class StringIterator implements Iterator<Character> {
     private final Character[] charactersOfString;
@@ -19,6 +20,9 @@ public class StringIterator implements Iterator<Character> {
     }
 
     public Character next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
         return charactersOfString[nextIndex++];
     }
 
