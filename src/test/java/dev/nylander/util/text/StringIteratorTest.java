@@ -26,6 +26,11 @@ public class StringIteratorTest {
         testPeekNextEquality("hello World!?!");
     }
 
+    @Test
+    public void peekNextEqualityTest2() {
+        testPeekNextEquality("another StRiNg! ---//\\");
+    }
+
     private void testPeekNextEquality(String string) {
         StringIterator iterator = new StringIterator(string);
         while (iterator.hasNext()) {
