@@ -16,6 +16,10 @@ public class BitQueue {
         internalBits[length++] = bit;
     }
 
+    public boolean dequeue() {
+        return false;
+    }
+
     public int length() {
         return length;
     }

@@ -62,4 +62,21 @@ public class BitQueueTest {
         queue.enqueue(false);
         Assert.assertEquals(6, queue.length());
     }
+
+    @Test
+    public void dequeueTest() {
+        BitQueue queue = new BitQueue();
+        boolean[] toEnqueue = new boolean[]{
+                false, false, true, true,
+                true, false, true, false
+        };
+        boolean[] dequeued = new boolean[8];
+        for (int i = 0; i < 8; i++) {
+            queue.enqueue(toEnqueue[i]);
+        }
+        for (int i = 7; i >= 0; i--) {
+            dequeued[i] = queue.dequeue();
+        }
+        Assert.assertArrayEquals(toEnqueue, dequeued);
+    }
 }
