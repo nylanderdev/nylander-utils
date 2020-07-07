@@ -12,9 +12,9 @@ public class BitQueueTest {
     }
 
     @Test
-    public void bitPushTest() {
+    public void enqueueBitTest() {
         BitQueue buffer = new BitQueue();
-        buffer.pushBit(true);
+        buffer.enqueue(true);
         Assert.assertTrue(buffer.bitAt(0));
     }
 }
