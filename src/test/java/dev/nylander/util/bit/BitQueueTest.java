@@ -50,4 +50,16 @@ public class BitQueueTest {
                 true, false, false};
         Assert.assertArrayEquals(expected, queue.asBits());
     }
+
+    @Test
+    public void lengthTest() {
+        BitQueue queue = new BitQueue();
+        queue.enqueue(true);
+        queue.enqueue(true);
+        queue.enqueue(false);
+        queue.enqueue(true);
+        queue.enqueue(false);
+        queue.enqueue(false);
+        Assert.assertEquals(6, queue.length());
+    }
 }

@@ -16,6 +16,10 @@ public class BitQueue {
         internalBits[length++] = bit;
     }
 
+    public int length() {
+        return length;
+    }
+
     public boolean[] asBits() {
         boolean[] copy = new boolean[length];
         System.arraycopy(internalBits, 0, copy, 0, copy.length);
