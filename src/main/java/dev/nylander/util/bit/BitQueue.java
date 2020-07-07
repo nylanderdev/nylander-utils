@@ -17,7 +17,9 @@ public class BitQueue {
     }
 
     public boolean[] asBits() {
-        return new boolean[0];
+        boolean[] copy = new boolean[length];
+        System.arraycopy(internalBits, 0, copy, 0, copy.length);
+        return copy;
     }
 
     public boolean isFull() {
