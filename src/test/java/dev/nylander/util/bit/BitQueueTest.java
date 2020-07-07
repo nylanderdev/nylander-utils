@@ -79,4 +79,11 @@ public class BitQueueTest {
         }
         Assert.assertArrayEquals(toEnqueue, dequeued);
     }
+
+    @Test
+    public void dequeueEmptyTest() {
+        BitQueue queue = new BitQueue();
+        Assert.assertThrows(IllegalStateException.class,
+                queue::dequeue);
+    }
 }
