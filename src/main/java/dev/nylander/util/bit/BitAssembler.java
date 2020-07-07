@@ -1,14 +1,8 @@
 package dev.nylander.util.bit;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
-
 public class BitAssembler {
-    private final Queue<Character> internalChars = new ArrayDeque<>();
     private BitQueue topBuffer = new BitQueue();
-    private BitQueue bottomBuffer = new BitQueue();
-
+    private CharToBitConverterBuffer charBuffer = new CharToBitConverterBuffer();
 
     public void push(boolean bit) {
         topBuffer.enqueue(bit);
@@ -43,22 +37,6 @@ public class BitAssembler {
         }
     }
 
-    public boolean popBit() {
-        if (availableBits() <= 0) {
-            throw new IllegalStateException("BitAssembler is empty.");
-        }
-        if (bottomBuffer.length() > 0) {
-            return bottomBuffer.dequeue();
-        } else {
-            if (internalChars.size() > 0) {
-                loadBottomBuffer();
-                return bottomBuffer.dequeue();
-            } else {
-                return topBuffer.dequeue();
-            }
-        }
-    }
-
     public boolean[] popBits(int bitCount) {
         if (availableBits() < bitCount) {
             throw new IllegalArgumentException("Less than " + bitCount + " bits in the BitAssembler.");
@@ -68,6 +46,14 @@ public class BitAssembler {
             poppedBits[i] = popBit();
         }
         return poppedBits;
+    }
+
+    public boolean popBit() {
+        if (availableBits() < 1)
+            throw new IllegalArgumentException("BitAssembler is empty.");
+        if (charBuffer.availableBits() > 0)
+            return charBuffer.dequeueBit();
+        else return topBuffer.dequeue();
     }
 
     public byte popByte() {
@@ -86,19 +72,11 @@ public class BitAssembler {
     }
 
     public int availableBits() {
-        return bottomBuffer.length() + 8 * internalChars.size() + topBuffer.length();
-    }
-
-    private void loadBottomBuffer() {
-        char internalChar = internalChars.remove();
-        boolean[] bitsToLoad = BitUtils.charToBits(internalChar);
-        for (boolean bit : bitsToLoad) {
-            bottomBuffer.enqueue(bit);
-        }
+        return charBuffer.availableBits() + topBuffer.length();
     }
 
     private void pushTopBuffer() {
-        internalChars.add(charFromTopBuffer());
+        charBuffer.enqueue(charFromTopBuffer());
         resetTopBuffer();
     }
 
