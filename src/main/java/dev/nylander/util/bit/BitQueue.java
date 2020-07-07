@@ -17,9 +17,15 @@ public class BitQueue {
     }
 
     public boolean dequeue() {
+        if (isEmpty())
+            throw new IllegalStateException("BitQueue is empty");
         boolean firstBit = internalBits[0];
         shiftInternalBitsLeft();
         return firstBit;
+    }
+
+    private boolean isEmpty() {
+        return length <= 0;
     }
 
     private void shiftInternalBitsLeft() {
