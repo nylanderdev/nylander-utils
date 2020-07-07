@@ -27,4 +27,13 @@ public class BitQueueTest {
         Assert.assertThrows(IllegalStateException.class,
                 () -> queue.enqueue(true));
     }
+
+    @Test
+    public void fullTest() {
+        BitQueue queue = new BitQueue();
+        for (int i = 0; i < 8; i++) {
+            queue.enqueue(true);
+        }
+        Assert.assertTrue(queue.isFull());
+    }
 }

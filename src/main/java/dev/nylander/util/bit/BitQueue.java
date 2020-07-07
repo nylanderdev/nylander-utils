@@ -16,7 +16,7 @@ public class BitQueue {
         internalBits[length++] = bit;
     }
 
-    private boolean isFull() {
+    public boolean isFull() {
         return length >= 8;
     }
 }
