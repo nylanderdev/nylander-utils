@@ -17,6 +17,6 @@ public class BitQueue {
     }
 
     //private boolean isFull() {
-    //    return length >= 7;
+    //    return length >= 8;
     //}
 }
