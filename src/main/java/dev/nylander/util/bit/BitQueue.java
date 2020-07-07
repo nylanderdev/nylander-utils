@@ -11,12 +11,12 @@ public class BitQueue {
     }
 
     public void enqueue(boolean bit) {
-        //if (isFull())
-        //    throw new IllegalStateException("BitQueue is full");
+        if (isFull())
+            throw new IllegalStateException("BitQueue is full");
         internalBits[length++] = bit;
     }
 
-    //private boolean isFull() {
-    //    return length >= 8;
-    //}
+    private boolean isFull() {
+        return length >= 8;
+    }
 }
