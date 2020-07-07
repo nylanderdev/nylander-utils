@@ -10,4 +10,11 @@ public class BitBufferTest {
         Assert.assertThrows(IndexOutOfBoundsException.class,
                 () -> buffer.bitAt(0));
     }
+
+    @Test
+    public void bitPushTest() {
+        BitBuffer buffer = new BitBuffer();
+        buffer.pushBit(true);
+        Assert.assertTrue(buffer.bitAt(0));
+    }
 }
