@@ -24,7 +24,7 @@ public class BitQueue {
         return firstBit;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return length <= 0;
     }
 

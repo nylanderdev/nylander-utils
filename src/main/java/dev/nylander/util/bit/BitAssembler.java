@@ -2,7 +2,7 @@ package dev.nylander.util.bit;
 
 public class BitAssembler {
     private BitQueue topBuffer = new BitQueue();
-    private CharBitQueue charBuffer = new CharBitQueue();
+    private final CharBitQueue charBuffer = new CharBitQueue();
 
     public void push(boolean bit) {
         topBuffer.enqueue(bit);
