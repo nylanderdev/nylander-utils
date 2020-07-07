@@ -6,14 +6,13 @@ import java.util.Queue;
 
 public class BitAssembler {
     private final Queue<Character> internalChars = new ArrayDeque<>();
-    private final boolean[] topBuffer = new boolean[8];
-    private int topBufferLength = 0;
-    private final boolean[] bottomBuffer = new boolean[8];
-    private int bottomBufferLength = 0;
+    private BitQueue topBuffer = new BitQueue();
+    private BitQueue bottomBuffer = new BitQueue();
+
 
     public void push(boolean bit) {
-        topBuffer[topBufferLength++] = bit;
-        if (topBufferLength == 8) {
+        topBuffer.enqueue(bit);
+        if (topBuffer.isFull()) {
             pushTopBuffer();
         }
     }
@@ -48,14 +47,14 @@ public class BitAssembler {
         if (availableBits() <= 0) {
             throw new IllegalStateException("BitAssembler is empty.");
         }
-        if (bottomBufferLength > 0) {
-            return popBitFromBottomBuffer();
+        if (bottomBuffer.length() > 0) {
+            return bottomBuffer.dequeue();
         } else {
             if (internalChars.size() > 0) {
                 loadBottomBuffer();
-                return popBitFromBottomBuffer();
+                return bottomBuffer.dequeue();
             } else {
-                return popBitFromTopBuffer();
+                return topBuffer.dequeue();
             }
         }
     }
@@ -87,39 +86,14 @@ public class BitAssembler {
     }
 
     public int availableBits() {
-        return bottomBufferLength + 8 * internalChars.size() + topBufferLength;
+        return bottomBuffer.length() + 8 * internalChars.size() + topBuffer.length();
     }
 
     private void loadBottomBuffer() {
         char internalChar = internalChars.remove();
         boolean[] bitsToLoad = BitUtils.charToBits(internalChar);
-        System.arraycopy(bitsToLoad, 0, bottomBuffer, 0, bitsToLoad.length);
-        bottomBufferLength = 8;
-    }
-
-    private boolean popBitFromTopBuffer() {
-        boolean poppedBit = topBuffer[0];
-        shiftTopBuffer();
-        return poppedBit;
-    }
-
-    private void shiftTopBuffer() {
-        topBufferLength--;
-        if (topBufferLength >= 0) {
-            System.arraycopy(topBuffer, 1, topBuffer, 0, topBufferLength);
-        }
-    }
-
-    private boolean popBitFromBottomBuffer() {
-        boolean poppedBit = bottomBuffer[0];
-        shiftBottomBuffer();
-        return poppedBit;
-    }
-
-    private void shiftBottomBuffer() {
-        bottomBufferLength--;
-        if (bottomBufferLength >= 0) {
-            System.arraycopy(bottomBuffer, 1, bottomBuffer, 0, bottomBufferLength);
+        for (boolean bit : bitsToLoad) {
+            bottomBuffer.enqueue(bit);
         }
     }
 
@@ -129,11 +103,10 @@ public class BitAssembler {
     }
 
     private void resetTopBuffer() {
-        topBufferLength = 0;
-        Arrays.fill(topBuffer, false);
+        topBuffer = new BitQueue();
     }
 
     private char charFromTopBuffer() {
-        return BitUtils.bitsToChar(topBuffer);
+        return BitUtils.bitsToChar(topBuffer.asBits());
     }
 }
