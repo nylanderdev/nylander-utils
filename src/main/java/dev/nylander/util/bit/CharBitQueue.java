@@ -3,7 +3,7 @@ package dev.nylander.util.bit;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-class CharToBitConverterBuffer {
+class CharBitQueue {
     private final Queue<Character> internalChars = new ArrayDeque<>();
     private final BitQueue bottomBuffer = new BitQueue();
 
@@ -13,7 +13,7 @@ class CharToBitConverterBuffer {
 
     public boolean dequeueBit() {
         if (availableBits() <= 0) {
-            throw new IllegalStateException("BitAssembler is empty.");
+            throw new IllegalStateException("CharBitQueue is empty.");
         }
         if (bottomBuffer.length() <= 0) {
             loadBottomBuffer();

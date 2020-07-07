@@ -2,7 +2,7 @@ package dev.nylander.util.bit;
 
 public class BitAssembler {
     private BitQueue topBuffer = new BitQueue();
-    private CharToBitConverterBuffer charBuffer = new CharToBitConverterBuffer();
+    private CharBitQueue charBuffer = new CharBitQueue();
 
     public void push(boolean bit) {
         topBuffer.enqueue(bit);
@@ -61,9 +61,8 @@ public class BitAssembler {
     }
 
     public char popChar() {
-        if (availableBytes() < 1) {
+        if (availableBytes() < 1)
             throw new IllegalStateException("Less than eight bits in the BitAssembler.");
-        }
         return BitUtils.bitsToChar(popBits(8));
     }
 
