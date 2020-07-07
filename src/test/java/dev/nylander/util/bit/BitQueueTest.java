@@ -74,7 +74,7 @@ public class BitQueueTest {
         for (int i = 0; i < 8; i++) {
             queue.enqueue(toEnqueue[i]);
         }
-        for (int i = 7; i >= 0; i--) {
+        for (int i = 0; i < 8; i++) {
             dequeued[i] = queue.dequeue();
         }
         Assert.assertArrayEquals(toEnqueue, dequeued);

@@ -17,7 +17,14 @@ public class BitQueue {
     }
 
     public boolean dequeue() {
-        return false;
+        boolean firstBit = internalBits[0];
+        shiftInternalBitsLeft();
+        return firstBit;
+    }
+
+    private void shiftInternalBitsLeft() {
+        length--;
+        System.arraycopy(internalBits, 1, internalBits, 0, length);
     }
 
     public int length() {
