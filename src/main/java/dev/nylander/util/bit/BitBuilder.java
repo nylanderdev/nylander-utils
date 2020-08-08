@@ -1,18 +1,11 @@
 package dev.nylander.util.bit;
 
-import java.util.Arrays;
-
 public class BitBuilder {
     private final StringBuilder internalChars = new StringBuilder();
-    private final boolean[] buffer = new boolean[8];
-    private int bufferLength = 0;
+    private BitQueue buffer = new BitQueue();
 
     public void append(char aChar) {
-        if (bufferLength == 0) {
-            internalChars.append(aChar);
-        } else {
-            appendBits(BitUtils.charToBits(aChar));
-        }
+        appendBits(BitUtils.charToBits(aChar));
     }
 
     public void append(byte aByte) {
@@ -20,8 +13,8 @@ public class BitBuilder {
     }
 
     public void appendBit(boolean bit) {
-        buffer[bufferLength++] = bit;
-        if (bufferLength == 8) {
+        buffer.enqueue(bit);
+        if (buffer.isFull()) {
             pushBuffer();
         }
     }
@@ -38,23 +31,23 @@ public class BitBuilder {
     }
 
     private void resetBuffer() {
-        Arrays.fill(buffer, false);
-        bufferLength = 0;
+        buffer = new BitQueue();
     }
 
     public boolean[] toBits() {
-        boolean[] allBits = new boolean[8 * internalChars.length() + bufferLength];
+        boolean[] allBits = new boolean[8 * internalChars.length() + buffer.length()];
         char[] chars = internalChars.toString().toCharArray();
         for (int charIndex = 0; charIndex < chars.length; charIndex++) {
             boolean[] bitsOfChar = BitUtils.charToBits(chars[charIndex]);
             System.arraycopy(bitsOfChar, 0, allBits, 8 * charIndex, 8);
         }
-        System.arraycopy(buffer, 0, allBits, 8 * internalChars.length(), bufferLength);
+        boolean[] bufferBits = buffer.asBits();
+        System.arraycopy(bufferBits, 0, allBits, 8 * internalChars.length(), bufferBits.length);
         return allBits;
     }
 
     private char charFromBuffer() {
-        return BitUtils.bitsToChar(buffer);
+        return BitUtils.bitsToChar(buffer.asBits());
     }
 
 }
