@@ -1,6 +1,6 @@
 package dev.nylander.util.tree;
 
-public class InOrderTreeTraverser<NODE extends Node<NODE>> extends AbstractOrderTreeTraverse<NODE> {
+public class InOrderTreeTraverser<NODE extends Node<NODE>> extends AbstractOrderTreeTraverser<NODE> {
     public InOrderTreeTraverser(NODE root) {
         super(root, new InOrderTraversalStateIncrementer());
     }
